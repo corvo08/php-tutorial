@@ -14,3 +14,14 @@
 
 </body>
 </html>
+<?php include_once "dbinfo.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$username = mysqli_real_escape_string($link, $_POST['username']);
+	$password = mysqli_real_escape_string($link, $_POST['password']);
+
+	echo "Username entered is: ". $username . "<br />";
+	echo "Password entered is: ". $password;
+	mysqli_close($link);
+}
+?>
