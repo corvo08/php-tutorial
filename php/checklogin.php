@@ -16,6 +16,7 @@
 		} 
 		if(($username == $table_user) && ($password == $table_password)) { //checks for matching fields
 			if ($password == $table_password) {
+				session_start();
 				$_SESSION['user'] = $username; //sets the username in this session. global variable.
 				header("location:home.php"); //redirects user to the authenticated home page
 			}
