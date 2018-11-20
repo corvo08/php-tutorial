@@ -14,14 +14,28 @@
 
 </body>
 </html>
-<?php include_once "dbinfo.php";
+<?php include_once "dbinfo.php"; //mysql info
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$username = mysqli_real_escape_string($link, $_POST['username']);
 	$password = mysqli_real_escape_string($link, $_POST['password']);
+	$bool = true;
 
-	echo "Username entered is: ". $username . "<br />";
-	echo "Password entered is: ". $password;
-	mysqli_close($link);
-}
+	$query = mysqli_query($link, "select * from users"); //query user table
+	while($row = mysqli_fetch_array($query)) { //display all rows from query
+		$table_users = $row['username'];
+		if($username == $table_users) { //checks if there are any matching fields
+			$bool = false; //set bool to false
+			Print '<script>alert("Username has been taken!");</script>'; //promts the user
+			Print '<script>window.location.assign("register.php");</script>'; //redirects to register.php
+		}
+	}
+
+	if($bool){ //checks if bool is true
+		mysqli_query($link, "insert into users (username, password) values ('$username','$password')"); //inserts the value to users table
+		Print '<script>alert("Successfully Registered!");</script>'; //promt the user success
+		Print '<script>window.location.assign("register.php");</script>';
+	}
+
+	}
 ?>
